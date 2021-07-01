@@ -1,2 +1,2 @@
 # fullstack-transcribe
-A realtime transcription project using React and Flask 
+A real-time transcription project using React and Flask 

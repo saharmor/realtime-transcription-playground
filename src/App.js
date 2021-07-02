@@ -1,50 +1,78 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button} from "react-bootstrap";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import speechToTextUtils from "./utility_transcribe";
 import TranscribeOutput from "./TranscribeOutput";
 
+const useStyles = () => ({
+  root: {
+    display: 'flex',
+    flex: '1',
+    margin: '100px 0px 100px 0px',
+    alignItems: 'center',
+    textAlign: 'center',
+    flexDirection: 'column',
+  },
+  title: {
+    marginBottom: '20px',
+  },
+  buttonsSection: {
+    marginBottom: '40px',
+  },
+});
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentData: [],
-      recording: false,
-    };
-    this.onStart = this.onStart.bind(this);
-    this.onStop = this.onStop.bind(this);
+const App = ({classes}) => {
+  const [transcribedData, setTranscribedData] = useState([]);
+  const [interimTranscribedData, setInterimTranscribedData] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+
+  function handleDataReceived(data, isFinal) {
+    console.log(data, isFinal)
+    if (isFinal) {
+      setInterimTranscribedData('')
+      setTranscribedData(oldData => [...oldData, data])
+    } else {
+      setInterimTranscribedData(data)
+    }
   }
 
-  onStart() {
-    this.setState({recording: true, currentData: ''});
+  function onStart() {
+    setTranscribedData([])
+    setIsRecording(true)
 
-    speechToTextUtils.initRecording((data) => {
-      this.setState(prevState => ({
-        currentData: [...prevState.currentData, data]
-      }))
-    }, (error) => {
-      console.error('Error when recording', error);
-      this.setState({recording: false});
-      // No further action needed, as this already closes itself on error
-    });
+    speechToTextUtils.initRecording(
+      handleDataReceived,
+      (error) => {
+        console.error('Error when transcribing', error);
+        setIsRecording(false)
+        // No further action needed, as stream already closes itself on error
+      });
   }
 
-  onStop() {
-    this.setState({recording: false});
+  function onStop() {
+    setIsRecording(false)
     speechToTextUtils.stopRecording();
   }
 
-
-  render() {
-    return (
-      <div>
-        <TranscribeOutput currentData={this.state.currentData}/>
-        {!this.state.recording && <Button onClick={this.onStart} color="primary">Listen</Button>}
-        {this.state.recording && <Button onClick={this.onStop} color="secondary">Stop</Button>}
+  return (
+    <div className={classes.root}>
+      <div className={classes.title}>
+        <Typography variant="h3">
+          Your Transcription App <span role="img" aria-label="microphone-emoji">🎤</span>
+        </Typography>
       </div>
-    );
-  }
+      <div className={classes.buttonsSection}>
+        {!isRecording && <Button onClick={onStart} variant="primary">Start transcribing</Button>}
+        {isRecording && <Button onClick={onStop} variant="danger">Stop</Button>}
+      </div>
+      <div>
+        <TranscribeOutput transcribedText={transcribedData} interimTranscribedText={interimTranscribedData}/>
+      </div>
+    </div>
+  );
 }
 
-export default App;
+export default withStyles(useStyles)(App);

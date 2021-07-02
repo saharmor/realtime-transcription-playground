@@ -56,8 +56,8 @@ class ClientData:
 
             yield b"".join(data)
 
-    async def send_client_data(self, data):
-        await self._conn.emit('speechData', data)
+    async def send_client_data(self, data, is_final: bool):
+        await self._conn.emit('speechData', {'data': data, 'isFinal': is_final})
 
 
 async def listen_print_loop(responses, client: ClientData):
@@ -76,6 +76,7 @@ async def listen_print_loop(responses, client: ClientData):
     final one, print a newline to preserve the finalized transcription.
     """
     num_chars_printed = 0
+    interim_flush_counter = 0
     for response in responses:
         if not response.results:
             continue
@@ -98,6 +99,11 @@ async def listen_print_loop(responses, client: ClientData):
         if not result.is_final:
             sys.stdout.write(transcript + overwrite_chars + "\r")
             sys.stdout.flush()
+            interim_flush_counter += 1
+
+            if client and interim_flush_counter % 3 == 0:
+                interim_flush_counter = 0
+                await client.send_client_data(transcript + overwrite_chars + "\r", False)
 
             num_chars_printed = len(transcript)
         else:
@@ -105,7 +111,7 @@ async def listen_print_loop(responses, client: ClientData):
             print(text)
 
             if client:
-                await client.send_client_data(text)
+                await client.send_client_data(text, True)
 
             num_chars_printed = 0
 

@@ -10,8 +10,7 @@ let bufferSize = 2048,
   input,
   globalStream;
 
-//audioStream constraints
-const constraints = {
+const mediaConstraints = {
   audio: true,
   video: false
 };
@@ -46,13 +45,12 @@ let AudioStreamer = {
       };
     };
 
-    navigator.mediaDevices.getUserMedia(constraints)
+    navigator.mediaDevices.getUserMedia(mediaConstraints)
       .then(handleSuccess);
 
-    // Bind the data handler callback
     if (onData) {
-      socket.on('speechData', (data) => {
-        onData(data);
+      socket.on('speechData', (response) => {
+        onData(response.data, response.isFinal);
       });
     }
 
@@ -60,19 +58,16 @@ let AudioStreamer = {
       if (onError) {
         onError('error');
       }
-      // We don't want to emit another end stream event
       closeAll();
     });
 
     socket.on('endGoogleCloudStream', () => {
-      // We don't want to emit another end stream event
-      console.log('stopped')
       closeAll();
     });
   },
 
   stopRecording: function () {
-    socket.emit('endGoogleCloudStream', '');
+    socket.emit('endGoogleCloudStream');
     closeAll();
   }
 }

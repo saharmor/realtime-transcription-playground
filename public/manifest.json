@@ -1,6 +1,6 @@
 {
-  "short_name": "Fullstack transcribe",
-  "name": "Fullstack transcribe",
+  "short_name": "Transcription Playground",
+  "name": "Realtime Transcription Playground",
   "icons": [],
   "start_url": ".",
   "display": "standalone",

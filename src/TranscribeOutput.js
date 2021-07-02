@@ -21,8 +21,8 @@ const TranscribeOutput = ({classes, transcribedText, interimTranscribedText}) =>
 
   return (
     <div className={classes.root}>
-      <Typography variant="body1" noWrap>{transcribedText}</Typography>
-      <Typography className={classes.outputText} variant="body1" noWrap>{interimTranscribedText}</Typography>
+      <Typography variant="body1">{transcribedText}</Typography>
+      <Typography className={classes.outputText} variant="body1">{interimTranscribedText}</Typography>
     </div>
   )
 }

@@ -17,18 +17,12 @@ const mediaConstraints = {
 
 let AudioStreamer = {
   /**
+   * @param {object} transcribeConfig Transcription configuration such as language, encoding, etc.
    * @param {function} onData Callback to run on data each time it's received
    * @param {function} onError Callback to run on an error if one is emitted.
    */
-  initRecording: function (onData, onError) {
-    socket.emit('startGoogleCloudStream', {
-      audio: {
-        encoding: 'LINEAR16',
-        sampleRateHertz: 16000,
-        languageCode: 'en-US',
-      },
-      interimResults: true
-    });
+  initRecording: function (transcribeConfig, onData, onError) {
+    socket.emit('startGoogleCloudStream', {...transcribeConfig});
     AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
     processor = context.createScriptProcessor(bufferSize, 1, 1);

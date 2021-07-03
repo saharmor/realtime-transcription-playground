@@ -1,11 +1,12 @@
 import asyncio
 import queue
-import re
 import sys
 import threading
 from typing import Dict
 
 from google.cloud import speech
+
+from backend.settings import GOOGLE_SERVICE_JSON_FILE
 
 clients = {}
 
@@ -122,7 +123,7 @@ class GSpeechUtils:
     @staticmethod
     async def start_listen(client_id):
         client = clients[client_id]
-        speech_client = speech.SpeechClient.from_service_account_json('/Users/saharh/Documents/Personal/Work/ScriptKiddy/python_transcribe/InPay-backend-3c1a5892b00e.json')
+        speech_client = speech.SpeechClient.from_service_account_json(GOOGLE_SERVICE_JSON_FILE)
         config = speech.RecognitionConfig(encoding=GSpeechUtils.encoding_map[client.audio_config['encoding']], sample_rate_hertz=client.audio_config['sampleRateHertz'],
                                           language_code=client.audio_config['languageCode'], enable_automatic_punctuation=True)
         streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=client.general_config['interimResults'])

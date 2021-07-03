@@ -3,12 +3,13 @@ import asyncio
 import socketio
 from aiohttp import web
 
+from backend.settings import BACKEND_PORT
 from gspeech_utils import GSpeechUtils
 
 app = web.Application()
 sio = socketio.AsyncServer(cors_allowed_origins=[])  # * is bad
 
-# Binds our Socket.IO server to our Web App instance
+# Binds our Socket.IO server to our web app instance
 sio.attach(app)
 
 
@@ -30,4 +31,4 @@ async def close_google_stream(sid):
     await GSpeechUtils.stop_recognition_stream(sid)
 
 
-web.run_app(app, port=10000)
+web.run_app(app, port=BACKEND_PORT)

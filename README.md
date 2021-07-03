@@ -1,6 +1,6 @@
 <p align="center">
   <img width="60px" src="https://user-images.githubusercontent.com/6180201/124313197-cc93f200-db70-11eb-864a-fc65765fc038.png" alt="giant microphone"/><br/>
-  <h2 align="center">Realtime Transcription Playground</h2>
+  <h2 align="center">Real-time Transcription Playground</h2>
 </p>
 
 A real-time transcription project using React and socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code.
@@ -26,7 +26,7 @@ If you need to get a service account:
 
 More info here: https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#before-you-begin<br/>
 
-Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`. Further details can be found in this [Medium article - FIX]()
+Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`. Further details can be found in this [Medium article - FIX]().
 
 # Setup
 1. Clone or fork this repository

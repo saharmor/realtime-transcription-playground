@@ -7,10 +7,8 @@ A real-time transcription project using React and socketio python server. The go
 
 *Currently only supports real-time transcription using Google Cloud Speech*
 
-[Demo](https://www.loom.com/share/f49e8d2b264a4c9b8803a7b0612d103f)
-
+# Demo
 https://user-images.githubusercontent.com/6180201/124362454-370e6600-dc35-11eb-8374-77da5aec25b2.mp4
-
 
 
 # Installation
@@ -26,7 +24,7 @@ If you need to get a service account:
   - Create a service account
   - Download a private key as JSON
 
-More info here : https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#before-you-begin<br/>
+More info here: https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#before-you-begin<br/>
 
 Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`. Further details can be found in this [Medium article - FIX]()
 

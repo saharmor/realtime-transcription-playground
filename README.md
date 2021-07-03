@@ -3,18 +3,22 @@
   <h2 align="center">Realtime Transcription Playground</h2>
 </p>
 
-A real-time transcription project using React and socketio. The goal of this project is to enable developers to create web demos or speech2text prototypes with just a few lines of code.
+A real-time transcription project using React and socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code.
 
-[Demo - FIX LINK]()
+*Currently only supports real-time transcription using Google Cloud Speech*
+
+[Demo](https://www.loom.com/share/f49e8d2b264a4c9b8803a7b0612d103f)
+
+https://user-images.githubusercontent.com/6180201/124362454-370e6600-dc35-11eb-8374-77da5aec25b2.mp4
+
 
 
 # Installation
-* Google Speech API enabled for your project (see [below - FIX]())
 * Python 3 [instructions](https://realpython.com/installing-python/)
-* `yarn` ([instructions](https://classic.yarnpkg.com/en/docs/install/#mac-stable)) or `npm` ([instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
+* `yarn` [instructions](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 
-## Enable Google Speech API
-The `GOOGLE_SERVICE_JSON_FILE` environment file must be properly set and point to a valid service account file.
+## Google Speech API
+The code assumes an environent variable `GOOGLE_SERVICE_JSON_FILE` that points to a valid GCP service account file.
 
 If you need to get a service account:
   - Within your Google Cloud console, create or select a project
@@ -24,14 +28,13 @@ If you need to get a service account:
 
 More info here : https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#before-you-begin<br/>
 
-Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the file path of the JSON file containing your service account key.
-
-Further details can be found in this [Medium article - FIX]()
+Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`. Further details can be found in this [Medium article - FIX]()
 
 # Setup
 1. Clone or fork this repository
 2. Create a virtual environment in the root directory: `python -m venv $ENV_NAME`
 3. Activate the virtual environment: ` source $ENV_NAME/bin/activate` (for MacOS, Unix, or Linux users) or ` .\ENV_NAME\Scripts\activate` (for Windows users)
-4. Install requirements: `pip install -r api/requirements.txt`
+4. Install requirements: `pip install -r backend/requirements.txt`
 5. Set your environment variable `GOOGLE_SERVICE_JSON_FILE` to point to your file path
-6. Run `yarn install` or `npm install` in the root directory
+6. Run `yarn install` in the root directory
+7. Run `yarn start` to start the frontend and `start-backend` to run the backend

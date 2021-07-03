@@ -34,7 +34,6 @@ class ClientData:
         self._buff.put(data)
 
     def generator(self):
-        print('generator')
         while not self._closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the

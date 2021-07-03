@@ -3,7 +3,7 @@
   <h2 align="center">Real-time Transcription Playground</h2>
 </p>
 
-A real-time transcription project using React and socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code.
+A real-time transcription project using React and a socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code.
 
 *Currently only supports real-time transcription using Google Cloud Speech*
 

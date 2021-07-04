@@ -3,7 +3,7 @@
   <h2 align="center">Real-time Transcription Playground</h2>
 </p>
 
-A real-time transcription project using React and a socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code.
+A real-time transcription project using React and a socketio python server. The goal of this project is to enable developers to create web demos and speech2text prototypes with just a few lines of code. Examples can be medical dictation apps, a note-taking CRM for entrepreneurs, etc.
 
 *Currently only supports real-time transcription using Google Cloud Speech*
 
@@ -16,7 +16,7 @@ https://user-images.githubusercontent.com/6180201/124362454-370e6600-dc35-11eb-8
 * `yarn` [instructions](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 
 ## Google Speech API
-The code assumes an environent variable `GOOGLE_SERVICE_JSON_FILE` that points to a valid GCP service account file.
+The code assumes an environment variable `GOOGLE_SERVICE_JSON_FILE` that points to a valid GCP service account file.
 
 If you need to get a service account:
   - Within your Google Cloud console, create or select a project

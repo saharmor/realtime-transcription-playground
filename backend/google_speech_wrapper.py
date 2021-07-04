@@ -12,7 +12,7 @@ clients = {}
 
 
 class ClientData:
-    def __init__(self, transcribe_thread, conn, config):
+    def __init__(self, transcribe_thread, conn, config: Dict):
         self._buff = queue.Queue()
         self._thread = transcribe_thread
         self._closed = True
@@ -34,6 +34,9 @@ class ClientData:
         self._buff.put(data)
 
     def generator(self):
+        """
+        Code take and slightly modified from https://github.com/googleapis/python-speech/blob/master/samples/microphone/transcribe_streaming_infinite.py
+        """
         while not self._closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
@@ -61,7 +64,9 @@ class ClientData:
 
 
 async def listen_print_loop(responses, client: ClientData):
-    """Iterates through server responses and sends them back to client.
+    """
+    Code take and slightly modified from https://github.com/googleapis/python-speech/blob/master/samples/microphone/transcribe_streaming_infinite.py
+    Iterates through server responses and sends them back to client.
 
     The responses passed is a generator that will block until a response
     is provided by the server.
@@ -116,14 +121,14 @@ async def listen_print_loop(responses, client: ClientData):
             num_chars_printed = 0
 
 
-class GSpeechUtils:
+class GoogleSpeechWrapper:
     encoding_map = {'LINEAR16': speech.RecognitionConfig.AudioEncoding.LINEAR16}
 
     @staticmethod
-    async def start_listen(client_id):
+    async def start_listen(client_id: str):
         client = clients[client_id]
         speech_client = speech.SpeechClient.from_service_account_json(GOOGLE_SERVICE_JSON_FILE)
-        config = speech.RecognitionConfig(encoding=GSpeechUtils.encoding_map[client.audio_config['encoding']], sample_rate_hertz=client.audio_config['sampleRateHertz'],
+        config = speech.RecognitionConfig(encoding=GoogleSpeechWrapper.encoding_map[client.audio_config['encoding']], sample_rate_hertz=client.audio_config['sampleRateHertz'],
                                           language_code=client.audio_config['languageCode'], enable_automatic_punctuation=True)
         streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=client.general_config['interimResults'])
 
@@ -139,20 +144,20 @@ class GSpeechUtils:
     @staticmethod
     async def start_recognition_stream(sio, client_id: str, config: Dict):
         if client_id not in clients:
-            clients[client_id] = ClientData(threading.Thread(target=asyncio.run, args=(GSpeechUtils.start_listen(client_id),)), sio, config)
+            clients[client_id] = ClientData(threading.Thread(target=asyncio.run, args=(GoogleSpeechWrapper.start_listen(client_id),)), sio, config)
             clients[client_id].start_transcribing()
         else:
             print('Warning - already running transcription for client')
 
     @staticmethod
-    async def stop_recognition_stream(client):
-        if client in clients:
-            await clients[client].close()
-            del clients[client]
+    async def stop_recognition_stream(client_id: str):
+        if client_id in clients:
+            await clients[client_id].close()
+            del clients[client_id]
 
     @staticmethod
-    def receive_data(client, data):
-        if client not in clients:
+    def receive_data(client_id: str, data):
+        if client_id not in clients:
             return
 
-        clients[client].add_data(data)
+        clients[client_id].add_data(data)

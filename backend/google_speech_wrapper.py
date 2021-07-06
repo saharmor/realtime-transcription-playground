@@ -65,7 +65,7 @@ class ClientData:
 
 async def listen_print_loop(responses, client: ClientData):
     """
-    Code take and slightly modified from https://github.com/googleapis/python-speech/blob/master/samples/microphone/transcribe_streaming_infinite.py
+    Code taken and slightly modified from https://github.com/googleapis/python-speech/blob/master/samples/microphone/transcribe_streaming_infinite.py
     Iterates through server responses and sends them back to client.
 
     The responses passed is a generator that will block until a response

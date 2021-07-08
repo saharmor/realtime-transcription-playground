@@ -26,7 +26,7 @@ If you need to get a service account:
 
 More info in Google Cloud's docs [here](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#before-you-begin) and [here](https://codelabs.developers.google.com/codelabs/cloud-speech-text-python3#0).<br/>
 
-Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`.
+Then, set the environment variable `GOOGLE_SERVICE_JSON_FILE` to the path of the JSON file containing your service account key, e.g. `/users/sahar/documents/sample-project-3c1a5892b00e.json`. Further details can be found in this [Medium article](https://medium.com/geekculture/how-to-build-a-full-stack-transcription-app-with-google-cloud-react-and-python-2dfdcb5e556f).
 
 # Setup
 1. Clone or fork this repository
